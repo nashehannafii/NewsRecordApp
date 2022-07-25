@@ -1,4 +1,3 @@
-// const { command } = require("yargs");
 const yargs = require("yargs");
 const contacts = require("./contacts");
 
@@ -35,19 +34,19 @@ yargs.command({
         name: {
             demandOption: true,
             alias: "n",
-            describe: "Nama",
+            describe: "nama",
             type: "string",
         },
         email: {
             demandOption: false,
             alias: "e",
-            describe: "Email",
+            describe: "email",
             type: "string",
         },
         phone: {
             demandOption: true,
             alias: "p",
-            describe: "Nomor HP",
+            describe: "nomor-hp",
             type: "string",
         },
     },
@@ -62,6 +61,46 @@ yargs.command({
         // console.log(argv.name, argv.email, argv.phone);
 
         contacts.simpanContact(argv.name, argv.email, argv.phone);
+    }
+}).demandCommand();
+
+yargs.command({
+    command: "list",
+    describe: "Lihat data",
+    handler() {
+        contacts.listContact();
+    }
+})
+
+yargs.command({
+    command: "detail",
+    describe: "Lihat salah satu data berdasaerkan nama",
+    builder: {
+        name: {
+            demandOption: true,
+            alias: "n",
+            describe: "nama",
+            type: "string",
+        }
+    },
+    handler(argv) {
+        contacts.detailContact(argv.name);
+    }
+})
+
+yargs.command({
+    command: "hapus",
+    describe: "Hapus salah satu data berdasarkan nama",
+    builder: {
+        name: {
+            demandOption: true,
+            alias: "n",
+            describe: "nama",
+            type: "string",
+        }
+    },
+    handler(argv) {
+        contacts.deleteContact(argv.name);
     }
 })
 
